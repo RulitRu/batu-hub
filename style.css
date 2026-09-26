@@ -1,0 +1,269 @@
+/* ==========================================================================
+   BATU HUB — Google servisleri portalı
+   Tasarım: koyu zemin, sakin gri-lacivert tonlar, kart renkleri ikonlardan gelir
+   ========================================================================== */
+
+:root {
+  --bg: #10131a;
+  --bg-soft: #161a23;
+  --surface: #1b2029;
+  --surface-hover: #232a36;
+  --border: #2a303c;
+  --text: #eef1f6;
+  --text-dim: #98a1b3;
+  --accent: #6ea8ff;
+  --shadow: 0 1px 2px rgba(0,0,0,.35);
+  --radius: 14px;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+:root[data-theme="light"] {
+  --bg: #f5f6f8;
+  --bg-soft: #eef0f3;
+  --surface: #ffffff;
+  --surface-hover: #f0f2f6;
+  --border: #dfe2e8;
+  --text: #1b1f27;
+  --text-dim: #666e7d;
+  --accent: #3266d6;
+  --shadow: 0 1px 2px rgba(20,20,30,.08);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(1200px 600px at 50% -10%, var(--bg-soft), var(--bg) 60%);
+  color: var(--text);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color .2s ease, color .2s ease;
+}
+
+.wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 64px 24px 56px;
+}
+
+/* ---------- Başlık ---------- */
+
+.hero {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.subtitle {
+  margin: 6px 0 0;
+  font-size: 1.05rem;
+  color: var(--text-dim);
+  font-weight: 400;
+}
+
+/* ---------- Arama ---------- */
+
+.search-form {
+  position: relative;
+  max-width: 560px;
+  margin: 0 auto 48px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: var(--text-dim);
+  stroke-width: 2;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 15px 18px 15px 50px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  outline: none;
+  box-shadow: var(--shadow);
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.search-input::placeholder {
+  color: var(--text-dim);
+}
+
+.search-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+/* ---------- Servis grid'i ---------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 22px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--text);
+  box-shadow: var(--shadow);
+  transition: transform .12s ease, background-color .12s ease, border-color .12s ease;
+  position: relative;
+}
+
+.card:hover,
+.card:focus-visible {
+  background: var(--surface-hover);
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  transform: translateY(-2px);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.card:active {
+  transform: translateY(0);
+}
+
+.icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  background: var(--icon-bg, var(--accent));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.label {
+  font-size: .82rem;
+  font-weight: 500;
+  text-align: center;
+  color: var(--text);
+}
+
+/* Tooltip: servis adı + açıklama */
+.card::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: var(--surface-hover);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: .74rem;
+  padding: 6px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .12s ease, transform .12s ease;
+  z-index: 5;
+}
+
+.card:hover::after,
+.card:focus-visible::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ---------- Tema butonu ---------- */
+
+.theme-toggle {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  transition: background-color .12s ease, transform .12s ease;
+  z-index: 10;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.06);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 720px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .wrap {
+    padding: 56px 18px 40px;
+  }
+}
+
+@media (max-width: 420px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .card {
+    padding: 18px 8px;
+  }
+  .card::after {
+    display: none; /* küçük ekranda tooltip yer kaplamasın */
+  }
+}
+
+/* Hareket azaltma tercihine saygı */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
