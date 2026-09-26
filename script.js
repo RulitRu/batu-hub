@@ -57,15 +57,4 @@
   if (window.matchMedia && window.matchMedia("(min-width: 721px)").matches) {
     searchInput.focus();
   }
-
-  // "/" kısayolu: herhangi bir yerden basınca arama kutusuna odaklan
-  // (başka bir input'a yazarken tetiklenmesin diye kontrol edilir)
-  document.addEventListener("keydown", function (event) {
-    var target = event.target;
-    var isTyping = target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA");
-    if (event.key === "/" && !isTyping) {
-      event.preventDefault();
-      searchInput.focus();
-    }
-  });
 })();
